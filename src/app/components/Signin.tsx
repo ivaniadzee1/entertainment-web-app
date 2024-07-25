@@ -1,41 +1,41 @@
+// pages/sign-in.tsx
 "use client"
-import { useEffect, useState } from "react"
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-import { auth } from "../firebase/config"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { useEffect, useState } from "react";
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from "../firebase/config";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Signin() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const router = useRouter()
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    setErrorMessage('') 
+    e.preventDefault();
+    setErrorMessage('');
 
     try {
-      const resp = await signInWithEmailAndPassword(email, password)
+      const resp = await signInWithEmailAndPassword(email, password);
       if (resp) {
-        localStorage.setItem('user', JSON.stringify(resp.user))
-        setEmail('')
-        setPassword('')
-        router.push('/home-page')
+        localStorage.setItem('user', JSON.stringify(resp.user));
+        setEmail('');
+        setPassword('');
+        router.push('/home-page');
       }
     } catch (error) {
-      console.error("Sign-in error:", error)
-      setErrorMessage('wrong email or password. Please try again.')
+      console.error("Sign-in error:", error);
+      setErrorMessage('Wrong email or password. Please try again.');
     }
-  }
+  };
 
   useEffect(() => {
     if (error) {
-      setErrorMessage('wrong email or password. Please try again.')
+      setErrorMessage('Wrong email or password. Please try again.');
     }
-  }, [error])
+  }, [error]);
 
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-[#10141E] overflow-x-hidden">
@@ -67,5 +67,5 @@ export default function Signin() {
         <Link href="/sign-up" className="text-[#FC4747] text-center mt-3"> Sign Up</Link>
       </form>
     </div>
-  )
+  );
 }

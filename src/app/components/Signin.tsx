@@ -1,5 +1,4 @@
-// pages/sign-in.tsx
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from "../firebase/config";
